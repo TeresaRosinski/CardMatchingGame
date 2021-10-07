@@ -30,5 +30,8 @@ body{
 .card{
   height: 100%;
   width: 100%;
-
+}
+.back, 
+.front{
+  position: absolute; 
 }
