@@ -106,25 +106,29 @@ function makeCards() {
 	const randomCardData = randomizeCards();
 	for (let data of randomCardData) {
 
-		//create card holder + cards
-		const cardHolder = document.createElement("DIV");
+		//create card holderz
 		const card = document.createElement("DIV");
 		const front = document.createElement("img");
-		const back = document.createElement("img");
-		cardHolder.className = "card-holder";
+		const back = document.createElement("DIV");
 		card.classList = "card";
 		front.classList = "front";
 		back.classList = "back";
+		card.id = data.id
 		
 		//attach data
-		back.src = data.back;
-		front.src= data.front;
+
+		//on flip
+		front.src = data.front;
 
 		card.appendChild(front);
 		card.appendChild(back);
 		console.log(card);
-		cardHolder.appendChild(card);
-		section.appendChild(cardHolder);
+
+		section.appendChild(card);
+		card.addEventListener("click", (e) => {
+			console.log('hello' + card.id);
+			card.classList.toggle("toggleCard");
+		})
 	}
 }
 

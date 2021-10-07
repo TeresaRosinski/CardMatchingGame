@@ -19,19 +19,31 @@ body{
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  perspective: 800px;
+  
 }
 
-.card-holder{
+.card{
   height: 20%;
   width: 20%;
   border: 1px solid black;
   margin: 1%;
+  position: relative;
+  transform-style: preserve-3d;
+ 
+  transition: transform 2s ease;
 }
-.card{
-  height: 100%;
-  width: 100%;
+.card:hover{
+  transform: rotateY(180deg);
+  cursor: pointer;
 }
 .back, 
 .front{
-  position: absolute; 
+  width: 100%;
+  height: 100%;
+  position:absolute
+}
+.back{
+  background-image:url('./IMG/card-back.jpg');
+  
 }
