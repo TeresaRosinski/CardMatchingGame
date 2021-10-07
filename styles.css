@@ -21,14 +21,14 @@ body{
   align-items: center;
 }
 
-.card{
+.card-holder{
   height: 20%;
   width: 20%;
   border: 1px solid black;
   margin: 1%;
 }
-.card-back{
+.card{
   height: 100%;
   width: 100%;
-  background-image: url('./IMG/card-back.jpg');
+
 }
