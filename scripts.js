@@ -3,7 +3,7 @@ const section = document.querySelector("section");
 section.className = "game-board";
 
 const playerAttemptsCount = document.querySelector("span");
-const playerAttempts = 0;
+let playerAttempts = 0;
 
 //Link Text
 playerAttemptsCount.textContent = playerAttempts;
@@ -11,83 +11,83 @@ playerAttemptsCount.textContent = playerAttempts;
 //data
 const getCardData = () => [
 	{
-		back: './IMG/card-back.jpg',
-		front: './IMG/icon-1.png',
+		back: "./IMG/card-back.jpg",
+		front: "./IMG/icon-1.png",
 		id: 1,
 	},
 	{
-		back: './IMG/card-back.jpg',
-		front: './IMG/icon-2.png',
+		back: "./IMG/card-back.jpg",
+		front: "./IMG/icon-2.png",
 		id: 2,
 	},
 	{
-		back:'./IMG/card-back.jpg',
-		front: './IMG/icon-3.png',
+		back: "./IMG/card-back.jpg",
+		front: "./IMG/icon-3.png",
 		id: 3,
 	},
 	{
-		back: './IMG/card-back.jpg',
-		front: './IMG/icon-4.png',
+		back: "./IMG/card-back.jpg",
+		front: "./IMG/icon-4.png",
 		id: 4,
 	},
 	{
-		back: './IMG/card-back.jpg',
-		front: './IMG/icon-5.png',
+		back: "./IMG/card-back.jpg",
+		front: "./IMG/icon-5.png",
 		id: 5,
 	},
 	{
-		back: './IMG/card-back.jpg',
-		front: './IMG/icon-6.png',
+		back: "./IMG/card-back.jpg",
+		front: "./IMG/icon-6.png",
 		id: 6,
 	},
 	{
-		back: './IMG/card-back.jpg',
-		front: './IMG/icon-7.png',
+		back: "./IMG/card-back.jpg",
+		front: "./IMG/icon-7.png",
 		id: 7,
 	},
 	{
-		back: './IMG/card-back.jpg',
-		front: './IMG/icon-8.png',
+		back: "./IMG/card-back.jpg",
+		front: "./IMG/icon-8.png",
 		id: 8,
 	},
 	{
-		back: './IMG/card-back.jpg',
-		front: './IMG/icon-1.png',
+		back: "./IMG/card-back.jpg",
+		front: "./IMG/icon-1.png",
 		id: 1,
 	},
 	{
-		back: './IMG/card-back.jpg',
-		front: './IMG/icon-2.png',
+		back: "./IMG/card-back.jpg",
+		front: "./IMG/icon-2.png",
 		id: 2,
 	},
 	{
-		back: './IMG/card-back.jpg',
-		front: './IMG/icon-3.png',
+		back: "./IMG/card-back.jpg",
+		front: "./IMG/icon-3.png",
 		id: 3,
 	},
 	{
-		back: './IMG/card-back.jpg',
-		front: './IMG/icon-4.png',
+		back: "./IMG/card-back.jpg",
+		front: "./IMG/icon-4.png",
 		id: 4,
 	},
 	{
-		back: './IMG/card-back.jpg',
-		front: './IMG/icon-5.png',
+		back: "./IMG/card-back.jpg",
+		front: "./IMG/icon-5.png",
 		id: 5,
 	},
 	{
-		back: './IMG/card-back.jpg',
-		front: './IMG/icon-6.png',
+		back: "./IMG/card-back.jpg",
+		front: "./IMG/icon-6.png",
 		id: 6,
 	},
 	{
-		back: './IMG/card-back.jpg',
-		front: './IMG/icon-7.png',
+		back: "./IMG/card-back.jpg",
+		front: "./IMG/icon-7.png",
 		id: 7,
 	},
 	{
-		back: './IMG/card-back.jpg',
-		front: './IMG/icon-8.png',
+		back: "./IMG/card-back.jpg",
+		front: "./IMG/icon-8.png",
 		id: 8,
 	},
 ];
@@ -95,17 +95,15 @@ const getCardData = () => [
 //Random Card Function
 
 const randomizeCards = () => {
-	const cardData = getCardData()
+	const cardData = getCardData();
 	cardData.sort(() => Math.random() - 0.5);
 	return cardData;
-
-}
-randomizeCards(); 
+};
+randomizeCards();
 
 function makeCards() {
 	const randomCardData = randomizeCards();
 	for (let data of randomCardData) {
-
 		//create card holderz
 		const card = document.createElement("DIV");
 		const front = document.createElement("img");
@@ -113,27 +111,51 @@ function makeCards() {
 		card.classList = "card";
 		front.classList = "front";
 		back.classList = "back";
-		card.id = data.id
-		
 		//attach data
 
 		//on flip
 		front.src = data.front;
-
+		card.setAttribute("value", data.id);
 		card.appendChild(front);
 		card.appendChild(back);
 		console.log(card);
 
 		section.appendChild(card);
 		card.addEventListener("click", (e) => {
-			console.log('hello' + card.id);
+			//animation
 			card.classList.toggle("toggleCard");
-		})
+			checkCards(e);
+		});
 	}
 }
 
-function pairChecker
+//Check Cards
+const checkCards = (e) => {
+	const clickedCard = e.target;
+	clickedCard.classList.add("flipped");
+	console.log(clickedCard);
+	const flippedCards = document.querySelectorAll(".flipped");
+	console.log(flippedCards);
+
+	//Logic
+	if (flippedCards.length === 2) {
+		if (
+			flippedCards[0].getAttribute("value") ===
+			flippedCards[1].getAttribute("value")
+		) {
+			flippedCards.forEach(card => 
+				{
+					card.classList.remove("flipped");
+					card.style.pointerEvents = 'none';
+				})
+		} else {
+			flippedCards.forEach((card) => {
+				card.classList.remove("flipped");
+				setTimeout(() => card.classList.remove("toggleCard"), 1000);
+			});
+			playerAttempts += 1; 
+		}
+	}
+};
 
 makeCards();
-
-
