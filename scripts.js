@@ -1,14 +1,3 @@
-//Access Elements
-const section = document.querySelector("section");
-section.className = "game-board";
-
-const playerAttemptsCount = document.querySelector("span");
-let playerAttempts = 0;
-const playerMatchCount = document.querySelector(".playerMatchCount");
-let playerMatches = 0;
-//Link Text
-playerAttemptsCount.textContent = playerAttempts;
-playerMatchCount.textContent = playerMatches;
 //data
 const getCardData = () => [
 	{
@@ -93,14 +82,27 @@ const getCardData = () => [
 	},
 ];
 
-//Random Card Function
+//Access Elements
+const section = document.querySelector("section");
+section.className = "game-board";
 
+const resetButton = document.getElementById("reset");
+resetButton.addEventListener("click", () => restartGame());
+
+const playerAttemptsCount = document.querySelector("span");
+let playerAttempts = 0;
+playerAttemptsCount.textContent = playerAttempts;
+
+const playerMatchCount = document.querySelector(".playerMatchCount");
+let playerMatches = 0;
+playerMatchCount.textContent = playerMatches;
+
+//Random Card Function
 const randomizeCards = () => {
 	const cardData = getCardData();
 	cardData.sort(() => Math.random() - 0.5);
 	return cardData;
 };
-randomizeCards();
 
 function makeCards() {
 	const randomCardData = randomizeCards();
@@ -109,19 +111,18 @@ function makeCards() {
 		const card = document.createElement("DIV");
 		const front = document.createElement("img");
 		const back = document.createElement("DIV");
+
 		card.classList = "card";
 		front.classList = "front";
 		back.classList = "back";
-		//attach data
 
-		//on flip
 		front.src = data.front;
 		card.setAttribute("value", data.id);
+
 		card.appendChild(front);
 		card.appendChild(back);
-		console.log(card);
-
 		section.appendChild(card);
+
 		card.addEventListener("click", (e) => {
 			//animation
 			card.classList.toggle("toggleCard");
@@ -134,9 +135,7 @@ function makeCards() {
 const checkCards = (e) => {
 	const clickedCard = e.target;
 	clickedCard.classList.add("flipped");
-	console.log(clickedCard);
 	const flippedCards = document.querySelectorAll(".flipped");
-	console.log(flippedCards);
 
 	//Logic
 	if (flippedCards.length === 2) {
@@ -148,7 +147,7 @@ const checkCards = (e) => {
 			playerMatchCount.textContent = playerMatches;
 			if (playerMatches === 8) {
 				console.log("WINNN");
-				resetCards();
+				resetText();
 			}
 			flippedCards.forEach((card) => {
 				card.classList.remove("flipped");
@@ -165,13 +164,28 @@ const checkCards = (e) => {
 	}
 };
 
-//Reset
-const resetCards = () => {
+const restartGame = () => {
 	let cardData = randomizeCards();
-	let cardFaces = document.querySelectorAll(".front");
+	console.log("cardData restart", cardData);
+	let faces = document.querySelectorAll(".front");
 	let cards = document.querySelectorAll(".card");
-	cardData.forEach((card, index) => {
+	console.log(cards, "cards");
+	console.log(faces, "faces");
+	cardData.forEach((item, index) => {
 		cards[index].classList.remove("toggleCard");
+		cards[index].style.pointerEvents = "all";
+		cards[index].setAttribute("value", item.id);
+		faces[index].src = item.front;
 	});
+	resetText();
 };
+
+resetButton.addEventListener("click", () => restartGame());
 makeCards();
+
+const resetText = () => {
+	playerMatches = 0;
+	playerMatchCount.textContent = playerMatches;
+	playerAttempts = 0;
+	playerAttemptsCount.textContent = playerAttempts;
+};
