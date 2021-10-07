@@ -1,6 +1,6 @@
 //Access Elements
 const section = document.querySelector("section");
-section.className='game-board';
+section.className = "game-board";
 
 const playerAttemptsCount = document.querySelector("span");
 const playerAttempts = 0;
@@ -9,7 +9,7 @@ const playerAttempts = 0;
 playerAttemptsCount.textContent = playerAttempts;
 
 //data
-const cardsData = [
+const getCardData = () => [
 	{
 		background: `url('./IMG/card-back.jpg')`,
 		front: `url('./IMG/icon-1.png')`,
@@ -91,8 +91,21 @@ const cardsData = [
 		id: 8,
 	},
 ];
-function makeCards(data) {
-	for (let d of data) {
+
+//Random Card Function
+
+const randomizeCards = () => {
+	const cardData = getCardData()
+	cardData.sort(() => Math.random() - 0.5);
+	return cardData;
+
+}
+randomizeCards(); 
+
+function makeCards() {
+	const randomCardData = randomizeCards();
+	console.log(randomCardData);
+	for (let d of randomCardData) {
 		const cardHolder = document.createElement("DIV");
 		const card = document.createElement("DIV");
 		cardHolder.className = "card";
@@ -101,4 +114,7 @@ function makeCards(data) {
 		section.appendChild(cardHolder);
 	}
 }
-makeCards(cardsData);
+
+makeCards();
+
+
