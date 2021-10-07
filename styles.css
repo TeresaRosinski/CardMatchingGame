@@ -11,30 +11,23 @@ body{
   align-items: center;
 }
 .game-board{
-  height: 72vh; 
-  width: 72vh;
-  border: 2px solid black;
-  margin: 5% 5%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  perspective: 800px;
-  
+display: grid; 
+grid-template-columns: repeat(4, 8rem);
+grid-template-rows: repeat(4, 8rem);
+flex-direction: column;
+grid-gap:2rem;
+perspective: 800px;
 }
 
 .card{
-  height: 20%;
-  width: 20%;
-  border: 1px solid black;
-  margin: 1%;
   position: relative;
   transform-style: preserve-3d;
- 
-  transition: transform 2s ease;
+  transition: all 5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform:  rotateY(0deg);
+  box-shadow: rgba(0,0,0,0.2) 0px 5px 15px;
 }
-.card:hover{
-  transform: rotateY(180deg);
+.cards:hover{
+  
   cursor: pointer;
 }
 .back, 
@@ -45,5 +38,11 @@ body{
 }
 .back{
   background-image:url('./IMG/card-back.jpg');
-  
+  backface-visibility: hidden;
+}
+.hidden{
+  display: none;
+}
+.toggleCard{
+  transform: rotateY(180deg);
 }

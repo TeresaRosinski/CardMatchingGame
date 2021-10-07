@@ -132,6 +132,8 @@ function makeCards() {
 	}
 }
 
+function pairChecker
+
 makeCards();
 
 
