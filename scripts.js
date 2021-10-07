@@ -4,10 +4,11 @@ section.className = "game-board";
 
 const playerAttemptsCount = document.querySelector("span");
 let playerAttempts = 0;
-
+const playerMatchCount = document.querySelector(".playerMatchCount");
+let playerMatches = 0;
 //Link Text
 playerAttemptsCount.textContent = playerAttempts;
-
+playerMatchCount.textContent = playerMatches;
 //data
 const getCardData = () => [
 	{
@@ -143,19 +144,34 @@ const checkCards = (e) => {
 			flippedCards[0].getAttribute("value") ===
 			flippedCards[1].getAttribute("value")
 		) {
-			flippedCards.forEach(card => 
-				{
-					card.classList.remove("flipped");
-					card.style.pointerEvents = 'none';
-				})
+			playerMatches += 1;
+			playerMatchCount.textContent = playerMatches;
+			if (playerMatches === 8) {
+				console.log("WINNN");
+				resetCards();
+			}
+			flippedCards.forEach((card) => {
+				card.classList.remove("flipped");
+				card.style.pointerEvents = "none";
+			});
 		} else {
 			flippedCards.forEach((card) => {
 				card.classList.remove("flipped");
-				setTimeout(() => card.classList.remove("toggleCard"), 1000);
+				setTimeout(() => card.classList.remove("toggleCard"), 1300);
 			});
-			playerAttempts += 1; 
+			playerAttempts += 1;
+			playerAttemptsCount.textContent = playerAttempts;
 		}
 	}
 };
 
+//Reset
+const resetCards = () => {
+	let cardData = randomizeCards();
+	let cardFaces = document.querySelectorAll(".front");
+	let cards = document.querySelectorAll(".card");
+	cardData.forEach((card, index) => {
+		cards[index].classList.remove("toggleCard");
+	});
+};
 makeCards();
