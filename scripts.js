@@ -83,19 +83,23 @@ const cardData = [
 
 //Access Elements
 const section = document.querySelector("section");
-section.className = "game-board";
 
+//Restart Game
 const resetButton = document.getElementById("reset");
 resetButton.addEventListener("click", () => restartGame());
 
+//Score Trackers
 const playerAttemptsCount = document.querySelector(".playerAttemptsCount");
-let playerAttempts = 0;
-playerAttemptsCount.textContent = playerAttempts;
-
 const playerMatchCount = document.querySelector(".playerMatchCount");
-let playerMatches = 0;
-playerMatchCount.textContent = playerMatches;
+const resetText = () => {
+	playerMatches = 0;
+	playerMatchCount.textContent = playerMatches;
+	playerAttempts = 0;
+	playerAttemptsCount.textContent = playerAttempts;
+};
+resetText();
 
+//not an ideal shuffle function
 const randomizeCards = () => {
 	cardData.sort(() => Math.random() - 0.5);
 	return cardData;
@@ -104,27 +108,34 @@ const randomizeCards = () => {
 function makeCards() {
 	//creates random assorment of card data
 	const randomCardData = randomizeCards();
+
 	//create a playing card for each object in the randomCardData Array
 	randomCardData.map((item) => {
 		const card = document.createElement("DIV");
-		const front = document.createElement("img");
+		const front = document.createElement("DIV");
 		const back = document.createElement("DIV");
+		const frontImg = document.createElement("IMG");
+		const backImg = document.createElement("IMG");
 
 		card.classList = "card";
 		front.classList = "front";
 		back.classList = "back";
+		frontImg.classList = "cardImage";
+		backImg.classList = "cardImage";
+		frontImg.src = item.front;
+		backImg.src = item.back;
 
-		front.src = item.front;
 		card.setAttribute("value", item.value);
-
+		front.appendChild(frontImg);
+		back.appendChild(backImg);
 		card.appendChild(front);
 		card.appendChild(back);
 		section.appendChild(card);
 
 		card.addEventListener("click", (e) => {
 			//animation
-			
-			card.classList.toggle("toggleCard");
+
+			back.classList.add("hidden");
 			checkCards(e);
 		});
 	});
@@ -142,7 +153,7 @@ const checkCards = (e) => {
 			flippedCards[0].getAttribute("value") ===
 			flippedCards[1].getAttribute("value")
 		) {
-			playerMatches += 1;
+			playerMatches -= 1;
 			playerMatchCount.textContent = playerMatches;
 
 			if (playerMatches === 8) {
@@ -150,7 +161,6 @@ const checkCards = (e) => {
 				resetText();
 			}
 			flippedCards.forEach((card) => {
-			
 				card.classList.remove("flipped");
 				card.style.pointerEvents = "none";
 				setTimeout(() => card.classList.add("green"), 500);
@@ -159,11 +169,12 @@ const checkCards = (e) => {
 		} else {
 			flippedCards.forEach((card) => {
 				console.log(card);
+				const backDiv = card.querySelector('.back');
+				console.log(backDiv);
 				card.classList.remove("flipped");
-				setTimeout(() => card.classList.remove("toggleCard"), 4000);
 				setTimeout(() => card.classList.add("red"), 500);
 				setTimeout(() => card.classList.remove("red"), 3000);
-				
+				setTimeout(() => backDiv.classList.remove("hidden"), 3000);
 			});
 			playerAttempts += 1;
 			playerAttemptsCount.textContent = playerAttempts;
@@ -182,13 +193,6 @@ const restartGame = () => {
 		setTimeout(() => (faces[index].src = item.front), 1300);
 	});
 	resetText();
-};
-
-const resetText = () => {
-	playerMatches = 0;
-	playerMatchCount.textContent = playerMatches;
-	playerAttempts = 0;
-	playerAttemptsCount.textContent = playerAttempts;
 };
 
 resetButton.addEventListener("click", () => restartGame());
