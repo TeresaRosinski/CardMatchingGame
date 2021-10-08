@@ -123,6 +123,7 @@ function makeCards() {
 
 		card.addEventListener("click", (e) => {
 			//animation
+			
 			card.classList.toggle("toggleCard");
 			checkCards(e);
 		});
@@ -149,14 +150,20 @@ const checkCards = (e) => {
 				resetText();
 			}
 			flippedCards.forEach((card) => {
+			
 				card.classList.remove("flipped");
 				card.style.pointerEvents = "none";
+				setTimeout(() => card.classList.add("green"), 500);
+				setTimeout(() => card.classList.remove("green"), 3000);
 			});
 		} else {
 			flippedCards.forEach((card) => {
+				console.log(card);
 				card.classList.remove("flipped");
-				card.classList.add("red");
-				setTimeout(() => card.classList.remove("toggleCard"), 1000);
+				setTimeout(() => card.classList.remove("toggleCard"), 4000);
+				setTimeout(() => card.classList.add("red"), 500);
+				setTimeout(() => card.classList.remove("red"), 3000);
+				
 			});
 			playerAttempts += 1;
 			playerAttemptsCount.textContent = playerAttempts;
