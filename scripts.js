@@ -1,84 +1,83 @@
-//data
-const getCardData = () => [
+const cardData = [
 	{
 		back: "./IMG/card-back.jpg",
 		front: "./IMG/icon-1.png",
-		id: 1,
+		value: 1,
 	},
 	{
 		back: "./IMG/card-back.jpg",
 		front: "./IMG/icon-2.png",
-		id: 2,
+		value: 2,
 	},
 	{
 		back: "./IMG/card-back.jpg",
 		front: "./IMG/icon-3.png",
-		id: 3,
+		value: 3,
 	},
 	{
 		back: "./IMG/card-back.jpg",
 		front: "./IMG/icon-4.png",
-		id: 4,
+		value: 4,
 	},
 	{
 		back: "./IMG/card-back.jpg",
 		front: "./IMG/icon-5.png",
-		id: 5,
+		value: 5,
 	},
 	{
 		back: "./IMG/card-back.jpg",
 		front: "./IMG/icon-6.png",
-		id: 6,
+		value: 6,
 	},
 	{
 		back: "./IMG/card-back.jpg",
 		front: "./IMG/icon-7.png",
-		id: 7,
+		value: 7,
 	},
 	{
 		back: "./IMG/card-back.jpg",
 		front: "./IMG/icon-8.png",
-		id: 8,
+		value: 8,
 	},
 	{
 		back: "./IMG/card-back.jpg",
 		front: "./IMG/icon-1.png",
-		id: 1,
+		value: 1,
 	},
 	{
 		back: "./IMG/card-back.jpg",
 		front: "./IMG/icon-2.png",
-		id: 2,
+		value: 2,
 	},
 	{
 		back: "./IMG/card-back.jpg",
 		front: "./IMG/icon-3.png",
-		id: 3,
+		value: 3,
 	},
 	{
 		back: "./IMG/card-back.jpg",
 		front: "./IMG/icon-4.png",
-		id: 4,
+		value: 4,
 	},
 	{
 		back: "./IMG/card-back.jpg",
 		front: "./IMG/icon-5.png",
-		id: 5,
+		value: 5,
 	},
 	{
 		back: "./IMG/card-back.jpg",
 		front: "./IMG/icon-6.png",
-		id: 6,
+		value: 6,
 	},
 	{
 		back: "./IMG/card-back.jpg",
 		front: "./IMG/icon-7.png",
-		id: 7,
+		value: 7,
 	},
 	{
 		back: "./IMG/card-back.jpg",
 		front: "./IMG/icon-8.png",
-		id: 8,
+		value: 8,
 	},
 ];
 
@@ -89,7 +88,7 @@ section.className = "game-board";
 const resetButton = document.getElementById("reset");
 resetButton.addEventListener("click", () => restartGame());
 
-const playerAttemptsCount = document.querySelector("span");
+const playerAttemptsCount = document.querySelector(".playerAttemptsCount");
 let playerAttempts = 0;
 playerAttemptsCount.textContent = playerAttempts;
 
@@ -97,17 +96,16 @@ const playerMatchCount = document.querySelector(".playerMatchCount");
 let playerMatches = 0;
 playerMatchCount.textContent = playerMatches;
 
-//Random Card Function
 const randomizeCards = () => {
-	const cardData = getCardData();
 	cardData.sort(() => Math.random() - 0.5);
 	return cardData;
 };
 
 function makeCards() {
+	//creates random assorment of card data
 	const randomCardData = randomizeCards();
-	for (let data of randomCardData) {
-		//create card holderz
+	//create a playing card for each object in the randomCardData Array
+	randomCardData.map((item) => {
 		const card = document.createElement("DIV");
 		const front = document.createElement("img");
 		const back = document.createElement("DIV");
@@ -116,8 +114,8 @@ function makeCards() {
 		front.classList = "front";
 		back.classList = "back";
 
-		front.src = data.front;
-		card.setAttribute("value", data.id);
+		front.src = item.front;
+		card.setAttribute("value", item.value);
 
 		card.appendChild(front);
 		card.appendChild(back);
@@ -128,7 +126,7 @@ function makeCards() {
 			card.classList.toggle("toggleCard");
 			checkCards(e);
 		});
-	}
+	});
 }
 
 //Check Cards
@@ -145,6 +143,7 @@ const checkCards = (e) => {
 		) {
 			playerMatches += 1;
 			playerMatchCount.textContent = playerMatches;
+
 			if (playerMatches === 8) {
 				console.log("WINNN");
 				resetText();
@@ -156,7 +155,8 @@ const checkCards = (e) => {
 		} else {
 			flippedCards.forEach((card) => {
 				card.classList.remove("flipped");
-				setTimeout(() => card.classList.remove("toggleCard"), 1300);
+				card.classList.add("red");
+				setTimeout(() => card.classList.remove("toggleCard"), 1000);
 			});
 			playerAttempts += 1;
 			playerAttemptsCount.textContent = playerAttempts;
@@ -166,22 +166,16 @@ const checkCards = (e) => {
 
 const restartGame = () => {
 	let cardData = randomizeCards();
-	console.log("cardData restart", cardData);
 	let faces = document.querySelectorAll(".front");
 	let cards = document.querySelectorAll(".card");
-	console.log(cards, "cards");
-	console.log(faces, "faces");
 	cardData.forEach((item, index) => {
 		cards[index].classList.remove("toggleCard");
 		cards[index].style.pointerEvents = "all";
-		cards[index].setAttribute("value", item.id);
-		faces[index].src = item.front;
+		setTimeout(() => cards[index].setAttribute("value", item.value), 1300);
+		setTimeout(() => (faces[index].src = item.front), 1300);
 	});
 	resetText();
 };
-
-resetButton.addEventListener("click", () => restartGame());
-makeCards();
 
 const resetText = () => {
 	playerMatches = 0;
@@ -189,3 +183,6 @@ const resetText = () => {
 	playerAttempts = 0;
 	playerAttemptsCount.textContent = playerAttempts;
 };
+
+resetButton.addEventListener("click", () => restartGame());
+makeCards();

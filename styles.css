@@ -40,10 +40,18 @@ perspective: 800px;
 .back{
   background-image:url('./IMG/card-back.jpg');
   backface-visibility: hidden;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 .hidden{
   display: none;
 }
 .toggleCard{
   transform: rotateY(180deg);
+}
+.red{
+  background-color: red;
+}
+.white{
+  background-color: white;
 }
