@@ -1,3 +1,4 @@
+
 const cardData = [
 	{
 		back: "./IMG/card-back.jpg",
@@ -81,6 +82,29 @@ const cardData = [
 	},
 ];
 
+function shuffleDeckAnimation () {
+	console.log('start');
+	gsap.from(".anim0", { x: 500, y: 500, delay: 2 });
+	gsap.from(".anim1", { x: 150, y: 500, delay: 2 });
+	gsap.from(".anim2", { x: -200, y: 500, delay: 2 });
+	gsap.from(".anim3", { x: -550, y: 500, delay: 2 });
+	
+	gsap.from(".anim4", { x: 500, y: 150, delay: 2 });
+	gsap.from(".anim5", { x: 150, y: 150, delay: 2 });
+	gsap.from(".anim6", { x: -200, y: 150, delay: 2 });
+	gsap.from(".anim7", { x: -550, y: 150, delay: 2 });
+	
+	gsap.from(".anim8", { x: 500, y: -200, delay: 2 });
+	gsap.from(".anim9", { x: 150, y: -200, delay: 2 });
+	gsap.from(".anim10", { x: -200, y: -200, delay: 2 });
+	gsap.from(".anim11", { x: -550, y: -200, delay: 2 });
+	
+	gsap.from(".anim12", { x: 500, y: -550, delay: 2 });
+	gsap.from(".anim13", { x: 150, y: -550, delay: 2 });
+	gsap.from(".anim14", { x: -200, y: -550, delay: 2 });
+	gsap.from(".anim15", { x: -550, y: -550, delay: 2 });
+};
+
 //Access Elements
 const section = document.querySelector("section");
 
@@ -92,7 +116,7 @@ resetButton.addEventListener("click", () => restartGame());
 const playerAttemptsCount = document.querySelector(".playerAttemptsCount");
 const playerMatchCount = document.querySelector(".playerMatchCount");
 const resetText = () => {
-	playerMatches = 0;
+	playerMatches = 8;
 	playerMatchCount.textContent = playerMatches;
 	playerAttempts = 0;
 	playerAttemptsCount.textContent = playerAttempts;
@@ -110,7 +134,7 @@ function makeCards() {
 	const randomCardData = randomizeCards();
 
 	//create a playing card for each object in the randomCardData Array
-	randomCardData.map((item) => {
+	randomCardData.map((item, index) => {
 		const card = document.createElement("DIV");
 		const front = document.createElement("DIV");
 		const back = document.createElement("DIV");
@@ -118,6 +142,7 @@ function makeCards() {
 		const backImg = document.createElement("IMG");
 
 		card.classList = "card";
+		card.classList.add(`anim${index}`);
 		front.classList = "front";
 		back.classList = "back";
 		frontImg.classList = "cardImage";
@@ -131,24 +156,28 @@ function makeCards() {
 		card.appendChild(front);
 		card.appendChild(back);
 		section.appendChild(card);
-
+		
 		card.addEventListener("click", (e) => {
-			//animation
-
-			back.classList.add("hidden");
-			checkCards(e);
+		  back.classList.add("hidden");
+		  checkCards(e);
 		});
 	});
+	shuffleDeckAnimation();
 }
 
 //Check Cards
 const checkCards = (e) => {
+	const allCards = document.querySelectorAll('.card');
+	//clicked div containing front and back
 	const clickedCard = e.target;
 	clickedCard.classList.add("flipped");
+	
 	const flippedCards = document.querySelectorAll(".flipped");
+	flippedCards.length = 2;
 
-	//Logic
 	if (flippedCards.length === 2) {
+
+
 		if (
 			flippedCards[0].getAttribute("value") ===
 			flippedCards[1].getAttribute("value")
@@ -157,40 +186,42 @@ const checkCards = (e) => {
 			playerMatchCount.textContent = playerMatches;
 
 			if (playerMatches === 8) {
-				console.log("WINNN");
 				resetText();
 			}
 			flippedCards.forEach((card) => {
 				card.classList.remove("flipped");
-				card.style.pointerEvents = "none";
-				setTimeout(() => card.classList.add("green"), 500);
-				setTimeout(() => card.classList.remove("green"), 3000);
+				
+				
+				setTimeout(() => card.classList.add("green"), 100);
+				setTimeout(() => card.classList.remove("green"), 1000);
 			});
 		} else {
 			flippedCards.forEach((card) => {
 				console.log(card);
-				const backDiv = card.querySelector('.back');
+				const backDiv = card.querySelector(".back");
 				console.log(backDiv);
 				card.classList.remove("flipped");
-				setTimeout(() => card.classList.add("red"), 500);
-				setTimeout(() => card.classList.remove("red"), 3000);
-				setTimeout(() => backDiv.classList.remove("hidden"), 3000);
+				setTimeout(() => card.classList.add("red"), 200);
+				setTimeout(() => card.classList.remove("red"), 1000);
+				setTimeout(() => backDiv.classList.remove("hidden"), 1300);
 			});
 			playerAttempts += 1;
 			playerAttemptsCount.textContent = playerAttempts;
 		}
+		
 	}
+
 };
 
 const restartGame = () => {
+	
 	let cardData = randomizeCards();
 	let faces = document.querySelectorAll(".front");
 	let cards = document.querySelectorAll(".card");
 	cardData.forEach((item, index) => {
-		cards[index].classList.remove("toggleCard");
-		cards[index].style.pointerEvents = "all";
-		setTimeout(() => cards[index].setAttribute("value", item.value), 1300);
-		setTimeout(() => (faces[index].src = item.front), 1300);
+	cards[index].style.pointerEvents = "all";
+	cards[index].setAttribute("value", item.value);
+	faces[index].src = item.front;
 	});
 	resetText();
 };

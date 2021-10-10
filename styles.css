@@ -3,15 +3,21 @@
   padding: 0; 
   box-sizing: border-box;
 }
-main{
-  min-height: 100vh;
+body{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 10%;
+}
+main{
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 5%;
   border: 1px solid #bc5128;
-  padding:5%;
+  padding:3% 0%;
   background-color: #fcf6dd;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
@@ -20,15 +26,19 @@ main{
   letter-spacing: 4px;
   font-weight: 200;
   color: #181508;
-  margin-bottom: 5%;
+  margin-bottom: 3%;
+  padding: 2%;
+  text-align: center;
 }
 .scoreTrackers{
-  display: grid; 
-  grid-template-columns: repeat(3, 16rem);
-  grid-gap: 2rem;
+  display: flex; 
+  flex-direction: row;
+  justify-content: space-evenly;
   text-align: center;
-  margin-bottom: 5%;
+  margin-bottom: 3%;
   border-radius: 2px;
+  width: fit-content;
+  background-color:#bc5128;
 }
 .score{
   display: flex;
@@ -37,6 +47,7 @@ main{
   align-items: center;
   background-color:#bc5128;
   padding: 5%;
+  margin: 1%;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 p{
@@ -52,14 +63,16 @@ p{
   color: white;
   border: none;
   letter-spacing: 2px;
+  margin: 1%;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
+
 .game-board{
 display: grid; 
-grid-template-columns: repeat(4, 10rem);
-grid-template-rows: repeat(4, 10rem);
+grid-template-columns: repeat(4, 16vh);
+grid-template-rows: repeat(4, 16vh);
 flex-direction: column;
-grid-gap: 3rem;
+grid-gap: 1vh;
 perspective: 800px;
 }
 
