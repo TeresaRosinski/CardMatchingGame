@@ -250,25 +250,14 @@ const checkCards = (e) => {
 
 const restartGame = () => {
 	let cardData = randomizeCards();
-	//console.log('cd', cardData);
 	let faces = document.querySelectorAll(".front");
-	console.log(faces);
 	let cards = document.querySelectorAll(".card");
-	//console.log('cards', cards);
-	//let back = document.querySelectorAll(".back");
-	/*cardData.forEach((item, index) => {
-		console.log(faces[index], 'ci');
-		cards[index].style.pointerEvents = "all";
-		cards[index].setAttribute("value", item.value);
-		faces[index].src = item.front;
-		
-	});*/
+	let backs = document.querySelectorAll(".back");
 	cardData.map((item, index) => {
-		console.log(item)
-
 		cards[index].style.pointerEvents = "all";
 		cards[index].setAttribute("value", item.value);
 		faces[index].children[0].src = item.front;
+		backs[index].classList.remove("hidden");
 	});
 	resetText();
 };
