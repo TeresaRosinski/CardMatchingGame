@@ -10,11 +10,22 @@ body{
   align-items: center;
 }
 .header{
-  padding:0% 0%;
+  padding:5% 5%;
   text-align: center;
-
-
-
+  width: 100%;
+}
+.title{
+  font-size: 300%;
+  letter-spacing: 4px;
+  font-weight: 200;
+  color: #181508;
+  padding: 2%;
+  text-align: center;
+  width: 100%;
+}
+.subtext{
+  color: grey;
+  width: 100%;
 }
 .game-container{
   display: flex;
@@ -28,15 +39,7 @@ body{
   background-color: #fcf6dd;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
-.title{
-  font-size: 300%;
-  letter-spacing: 4px;
-  font-weight: 200;
-  color: #181508;
-  margin-bottom: 3%;
-  padding: 2%;
-  text-align: center;
-}
+
 .score-trackers{
   display: flex; 
   flex-direction: row;
@@ -76,24 +79,26 @@ p{
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   width: 25%;
 }
-
-.game-board{
-display: grid; 
-grid-template-columns: repeat(4, 16vh);
-grid-template-rows: repeat(4, 16vh);
-flex-direction: column;
-grid-gap: 1vh;
-perspective: 800px;
+#reset:hover{
+  transform: scale(1.1);
+  transition: 1s;
+  cursor: pointer;
 }
-
+.game-board{
+  display: grid; 
+  grid-template-columns: repeat(4, 16vh);
+  grid-template-rows: repeat(4, 16vh);
+  flex-direction: column;
+  grid-gap: 1vh;
+}
 .card{
   position: relative;
-  transform-style: preserve-3d;
+  
   transition: all 3s;
   transform:  rotateY(0deg);
   box-shadow: rgba(0,0,0,0.2) 0px 5px 15px;
 }
-.cards:hover{
+.back:hover{
   cursor: pointer;
 }
 .back, 

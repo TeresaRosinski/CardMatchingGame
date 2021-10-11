@@ -96,10 +96,10 @@ function shuffleDeckAnimation() {
 	gsap.from(".anim14", { x: -200, y: -550, delay: 1 });
 
 	//corners
-	gsap.from(".anim12", { x: 500, y: -550, delay: 3 });
-	gsap.from(".anim15", { x: -550, y: -550, delay: 3 });
-	gsap.from(".anim3", { x: -550, y: 500, delay: 3 });
-	gsap.from(".anim0", { x: 500, y: 500, delay: 3});
+	gsap.from(".anim12", { x: 500, y: -550, delay: 1.5 });
+	gsap.from(".anim15", { x: -550, y: -550, delay: 1.5 });
+	gsap.from(".anim3", { x: -550, y: 500, delay: 1.5 });
+	gsap.from(".anim0", { x: 500, y: 500, delay: 1.5});
 	
 }
 
@@ -162,7 +162,8 @@ function makeCards() {
 			pushPairArray(e);
 		});
 	});
-	shuffleDeckAnimation();
+	setTimeout(() => shuffleDeckAnimation(), 1000);
+	
 }
 
 //onclick function added to each card when they are created
