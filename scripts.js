@@ -99,8 +99,7 @@ function shuffleDeckAnimation() {
 	gsap.from(".anim12", { x: 500, y: -550, delay: 1.5 });
 	gsap.from(".anim15", { x: -550, y: -550, delay: 1.5 });
 	gsap.from(".anim3", { x: -550, y: 500, delay: 1.5 });
-	gsap.from(".anim0", { x: 500, y: 500, delay: 1.5});
-	
+	gsap.from(".anim0", { x: 500, y: 500, delay: 1.5 });
 }
 
 //Access Elements
@@ -163,14 +162,13 @@ function makeCards() {
 		});
 	});
 	setTimeout(() => shuffleDeckAnimation(), 1000);
-	
 }
 
 //onclick function added to each card when they are created
 const pushPairArray = (e) => {
-	if(!pairedArray.includes(e.target)){
+	if (!pairedArray.includes(e.target)) {
 		pairedArray.push(e.target);
-	}else{
+	} else {
 		alert("don't click the same box twice");
 	}
 	if (pairedArray.length === 2) {
