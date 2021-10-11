@@ -166,7 +166,15 @@ function makeCards() {
 }
 
 const pushPairArray = (e) => {
-	pairedArray.push(e.target);
+	console.log('pa0', pairedArray[0]);
+	console.log('e', e.target);
+	if(!pairedArray.includes(e.target)){
+		pairedArray.push(e.target);
+	}else{
+		alert("don't click the same box twice");
+	}
+	
+
 	//console.log(pairedArray);
 	if (pairedArray.length === 2) {
 		checkPairedArray(pairedArray);
@@ -200,15 +208,14 @@ function checkPairedArray(arr) {
 			});
 			const backDiv = card.querySelector(".back");
 			setTimeout(() => backDiv.classList.remove("hidden"), 1300);
-		//	console.log('c', card.getAttribute("value"));
 		});
 		playerAttempts += 1;
 		playerAttemptsCount.textContent = playerAttempts;
-		//console.log("boo");
 	}
 }
 
-//Check Cards
+//Check Cards - removed 
+/*
 const checkCards = (e) => {
 	const allCards = document.querySelectorAll(".card");
 	const clickedCard = e.target;
@@ -246,7 +253,8 @@ const checkCards = (e) => {
 			playerAttemptsCount.textContent = playerAttempts;
 		}
 	}
-};
+}; 
+*/
 
 const restartGame = () => {
 	let cardData = randomizeCards();
@@ -261,6 +269,5 @@ const restartGame = () => {
 	});
 	resetText();
 };
-
 resetButton.addEventListener("click", () => restartGame());
 makeCards();
