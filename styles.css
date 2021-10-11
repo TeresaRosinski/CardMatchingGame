@@ -9,13 +9,13 @@ body{
   justify-content: center;
   align-items: center;
 }
-main{
-  width: auto;
+.game-container{
   display: flex;
+  min-width: 70%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 5%;
+  margin: 2%;
   border: 1px solid #bc5128;
   padding:3% 0%;
   background-color: #fcf6dd;
@@ -30,7 +30,7 @@ main{
   padding: 2%;
   text-align: center;
 }
-.scoreTrackers{
+.score-trackers{
   display: flex; 
   flex-direction: row;
   justify-content: space-evenly;
@@ -101,21 +101,7 @@ perspective: 800px;
   background-repeat: no-repeat;
   background-size: contain;
 }
-.toggleCard{
-  transform: rotateY(180deg);
-}
-.red{
-  background-color: red;
-}
-.white{
-  background-color: white;
-}
-.green{
-  background-color: green;
-}
 .hidden{
   display: none;
 }
-.show{
-  display: block;
-}
+

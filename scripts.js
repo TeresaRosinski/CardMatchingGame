@@ -105,15 +105,18 @@ function shuffleDeckAnimation() {
 }
 
 //Access Elements
-const section = document.querySelector("section");
+const section = document.querySelector(".game-board");
+
+//Array for checking card pairs
 let pairedArray = [];
+
 //Restart Game
 const resetButton = document.getElementById("reset");
 resetButton.addEventListener("click", () => restartGame());
 
 //Score Trackers
-const playerAttemptsCount = document.querySelector(".playerAttemptsCount");
-const playerMatchCount = document.querySelector(".playerMatchCount");
+const playerAttemptsCount = document.querySelector(".player-attempts-count");
+const playerMatchCount = document.querySelector(".player-match-count");
 const resetText = () => {
 	playerMatches = 8;
 	playerMatchCount.textContent = playerMatches;
@@ -129,7 +132,6 @@ const randomizeCards = () => {
 };
 
 function makeCards() {
-	//creates random assorment of card data
 	const randomCardData = randomizeCards();
 
 	//create a playing card for each object in the randomCardData Array
@@ -158,30 +160,26 @@ function makeCards() {
 
 		card.addEventListener("click", (e) => {
 			back.classList.add("hidden");
-			//checkCards(e);
 			pushPairArray(e);
 		});
 	});
-	//shuffleDeckAnimation();
+	shuffleDeckAnimation();
 }
 
+//onclick function added to each card when they are created
 const pushPairArray = (e) => {
-	console.log('pa0', pairedArray[0]);
-	console.log('e', e.target);
 	if(!pairedArray.includes(e.target)){
 		pairedArray.push(e.target);
 	}else{
 		alert("don't click the same box twice");
 	}
-	
-
-	//console.log(pairedArray);
 	if (pairedArray.length === 2) {
 		checkPairedArray(pairedArray);
 		pairedArray = [];
 	}
 };
 
+//invoked during pushPairArray function when array length === 2
 function checkPairedArray(arr) {
 	if (arr[0].getAttribute("value") === arr[1].getAttribute("value")) {
 		arr.forEach((card) => {
@@ -214,48 +212,6 @@ function checkPairedArray(arr) {
 	}
 }
 
-//Check Cards - removed 
-/*
-const checkCards = (e) => {
-	const allCards = document.querySelectorAll(".card");
-	const clickedCard = e.target;
-	clickedCard.classList.add("flipped");
-	const flippedCards = document.querySelectorAll(".flipped");
-	if (flippedCards.length === 2) {
-		if (
-			flippedCards[0].getAttribute("value") ===
-			flippedCards[1].getAttribute("value")
-		) {
-			playerMatches -= 1;
-			playerMatchCount.textContent = playerMatches;
-
-			if (playerMatches === 0) {
-				resetText();
-			}
-			flippedCards.forEach((card) => {
-				setTimeout(() => card.classList.add("green"), 100);
-				setTimeout(() => card.classList.remove("green"), 1000);
-				card.classList.remove("flipped");
-				console.log("fc", flippedCards);
-			});
-		} else {
-			flippedCards.forEach((card) => {
-				const backDiv = card.querySelector(".back");
-
-				setTimeout(() => card.classList.add("red"), 200);
-
-				setTimeout(() => backDiv.classList.remove("hidden"), 1300);
-				card.classList.remove("flipped");
-				console.log("fc wrong", flippedCards);
-			});
-			console.log("opst else", flippedCards);
-			playerAttempts += 1;
-			playerAttemptsCount.textContent = playerAttempts;
-		}
-	}
-}; 
-*/
-
 const restartGame = () => {
 	let cardData = randomizeCards();
 	let faces = document.querySelectorAll(".front");
@@ -269,5 +225,6 @@ const restartGame = () => {
 	});
 	resetText();
 };
+
 resetButton.addEventListener("click", () => restartGame());
 makeCards();
