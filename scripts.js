@@ -82,26 +82,25 @@ const cardData = [
 ];
 
 function shuffleDeckAnimation() {
-	console.log("start");
-	gsap.from(".anim0", { x: 500, y: 500, delay: 2 });
-	gsap.from(".anim1", { x: 150, y: 500, delay: 2 });
-	gsap.from(".anim2", { x: -200, y: 500, delay: 2 });
-	gsap.from(".anim3", { x: -550, y: 500, delay: 2 });
+	gsap.from(".anim1", { x: 150, y: 500, delay: 1 });
+	gsap.from(".anim2", { x: -200, y: 500, delay: 1 });
+	gsap.from(".anim4", { x: 500, y: 150, delay: 1 });
+	gsap.from(".anim5", { x: 150, y: 150, delay: 1 });
+	gsap.from(".anim6", { x: -200, y: 150, delay: 1 });
+	gsap.from(".anim7", { x: -550, y: 150, delay: 1 });
+	gsap.from(".anim8", { x: 500, y: -200, delay: 1 });
+	gsap.from(".anim9", { x: 150, y: -200, delay: 1 });
+	gsap.from(".anim10", { x: -200, y: -200, delay: 1 });
+	gsap.from(".anim11", { x: -550, y: -200, delay: 1 });
+	gsap.from(".anim13", { x: 150, y: -550, delay: 1 });
+	gsap.from(".anim14", { x: -200, y: -550, delay: 1 });
 
-	gsap.from(".anim4", { x: 500, y: 150, delay: 2 });
-	gsap.from(".anim5", { x: 150, y: 150, delay: 2 });
-	gsap.from(".anim6", { x: -200, y: 150, delay: 2 });
-	gsap.from(".anim7", { x: -550, y: 150, delay: 2 });
-
-	gsap.from(".anim8", { x: 500, y: -200, delay: 2 });
-	gsap.from(".anim9", { x: 150, y: -200, delay: 2 });
-	gsap.from(".anim10", { x: -200, y: -200, delay: 2 });
-	gsap.from(".anim11", { x: -550, y: -200, delay: 2 });
-
-	gsap.from(".anim12", { x: 500, y: -550, delay: 2 });
-	gsap.from(".anim13", { x: 150, y: -550, delay: 2 });
-	gsap.from(".anim14", { x: -200, y: -550, delay: 2 });
-	gsap.from(".anim15", { x: -550, y: -550, delay: 2 });
+	//corners
+	gsap.from(".anim12", { x: 500, y: -550, delay: 3 });
+	gsap.from(".anim15", { x: -550, y: -550, delay: 3 });
+	gsap.from(".anim3", { x: -550, y: 500, delay: 3 });
+	gsap.from(".anim0", { x: 500, y: 500, delay: 3});
+	
 }
 
 //Access Elements
@@ -117,6 +116,7 @@ resetButton.addEventListener("click", () => restartGame());
 //Score Trackers
 const playerAttemptsCount = document.querySelector(".player-attempts-count");
 const playerMatchCount = document.querySelector(".player-match-count");
+
 const resetText = () => {
 	playerMatches = 8;
 	playerMatchCount.textContent = playerMatches;
@@ -133,7 +133,6 @@ const randomizeCards = () => {
 
 function makeCards() {
 	const randomCardData = randomizeCards();
-
 	//create a playing card for each object in the randomCardData Array
 	randomCardData.map((item, index) => {
 		const card = document.createElement("DIV");
@@ -146,8 +145,8 @@ function makeCards() {
 		card.classList.add(`anim${index}`);
 		front.classList = "front";
 		back.classList = "back";
-		frontImg.classList = "cardImage";
-		backImg.classList = "cardImage";
+		frontImg.classList = "card-image";
+		backImg.classList = "card-image";
 		frontImg.src = item.front;
 		backImg.src = item.back;
 
