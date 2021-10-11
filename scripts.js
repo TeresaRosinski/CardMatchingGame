@@ -1,4 +1,3 @@
-
 const cardData = [
 	{
 		back: "./IMG/card-back.jpg",
@@ -82,32 +81,32 @@ const cardData = [
 	},
 ];
 
-function shuffleDeckAnimation () {
-	console.log('start');
+function shuffleDeckAnimation() {
+	console.log("start");
 	gsap.from(".anim0", { x: 500, y: 500, delay: 2 });
 	gsap.from(".anim1", { x: 150, y: 500, delay: 2 });
 	gsap.from(".anim2", { x: -200, y: 500, delay: 2 });
 	gsap.from(".anim3", { x: -550, y: 500, delay: 2 });
-	
+
 	gsap.from(".anim4", { x: 500, y: 150, delay: 2 });
 	gsap.from(".anim5", { x: 150, y: 150, delay: 2 });
 	gsap.from(".anim6", { x: -200, y: 150, delay: 2 });
 	gsap.from(".anim7", { x: -550, y: 150, delay: 2 });
-	
+
 	gsap.from(".anim8", { x: 500, y: -200, delay: 2 });
 	gsap.from(".anim9", { x: 150, y: -200, delay: 2 });
 	gsap.from(".anim10", { x: -200, y: -200, delay: 2 });
 	gsap.from(".anim11", { x: -550, y: -200, delay: 2 });
-	
+
 	gsap.from(".anim12", { x: 500, y: -550, delay: 2 });
 	gsap.from(".anim13", { x: 150, y: -550, delay: 2 });
 	gsap.from(".anim14", { x: -200, y: -550, delay: 2 });
 	gsap.from(".anim15", { x: -550, y: -550, delay: 2 });
-};
+}
 
 //Access Elements
 const section = document.querySelector("section");
-
+let pairedArray = [];
 //Restart Game
 const resetButton = document.getElementById("reset");
 resetButton.addEventListener("click", () => restartGame());
@@ -156,28 +155,66 @@ function makeCards() {
 		card.appendChild(front);
 		card.appendChild(back);
 		section.appendChild(card);
-		
+
 		card.addEventListener("click", (e) => {
-		  back.classList.add("hidden");
-		  checkCards(e);
+			back.classList.add("hidden");
+			//checkCards(e);
+			pushPairArray(e);
 		});
 	});
-	shuffleDeckAnimation();
+	//shuffleDeckAnimation();
+}
+
+const pushPairArray = (e) => {
+	pairedArray.push(e.target);
+	//console.log(pairedArray);
+	if (pairedArray.length === 2) {
+		checkPairedArray(pairedArray);
+		pairedArray = [];
+	}
+};
+
+function checkPairedArray(arr) {
+	if (arr[0].getAttribute("value") === arr[1].getAttribute("value")) {
+		arr.forEach((card) => {
+			const gSelector = card.classList[1];
+			gsap.from(`.${gSelector}`, {
+				backgroundColor: "green",
+				duration: 1,
+				delay: 1,
+			});
+		});
+		playerMatches -= 1;
+		playerMatchCount.textContent = playerMatches;
+		if (playerMatches === 0) {
+			resetText();
+		}
+	} else {
+		arr.forEach((card) => {
+			const gSelector = card.classList[1];
+			gsap.from(`.${gSelector}`, {
+				backgroundColor: "red",
+				duration: 1,
+				delay: 1,
+				pointerEvents: "none",
+			});
+			const backDiv = card.querySelector(".back");
+			setTimeout(() => backDiv.classList.remove("hidden"), 1300);
+		//	console.log('c', card.getAttribute("value"));
+		});
+		playerAttempts += 1;
+		playerAttemptsCount.textContent = playerAttempts;
+		//console.log("boo");
+	}
 }
 
 //Check Cards
 const checkCards = (e) => {
-	const allCards = document.querySelectorAll('.card');
-	//clicked div containing front and back
+	const allCards = document.querySelectorAll(".card");
 	const clickedCard = e.target;
 	clickedCard.classList.add("flipped");
-	
 	const flippedCards = document.querySelectorAll(".flipped");
-	flippedCards.length = 2;
-
 	if (flippedCards.length === 2) {
-
-
 		if (
 			flippedCards[0].getAttribute("value") ===
 			flippedCards[1].getAttribute("value")
@@ -185,43 +222,53 @@ const checkCards = (e) => {
 			playerMatches -= 1;
 			playerMatchCount.textContent = playerMatches;
 
-			if (playerMatches === 8) {
+			if (playerMatches === 0) {
 				resetText();
 			}
 			flippedCards.forEach((card) => {
-				card.classList.remove("flipped");
-				
-				
 				setTimeout(() => card.classList.add("green"), 100);
 				setTimeout(() => card.classList.remove("green"), 1000);
+				card.classList.remove("flipped");
+				console.log("fc", flippedCards);
 			});
 		} else {
 			flippedCards.forEach((card) => {
-				console.log(card);
 				const backDiv = card.querySelector(".back");
-				console.log(backDiv);
-				card.classList.remove("flipped");
+
 				setTimeout(() => card.classList.add("red"), 200);
-				setTimeout(() => card.classList.remove("red"), 1000);
+
 				setTimeout(() => backDiv.classList.remove("hidden"), 1300);
+				card.classList.remove("flipped");
+				console.log("fc wrong", flippedCards);
 			});
+			console.log("opst else", flippedCards);
 			playerAttempts += 1;
 			playerAttemptsCount.textContent = playerAttempts;
 		}
-		
 	}
-
 };
 
 const restartGame = () => {
-	
 	let cardData = randomizeCards();
+	//console.log('cd', cardData);
 	let faces = document.querySelectorAll(".front");
+	console.log(faces);
 	let cards = document.querySelectorAll(".card");
-	cardData.forEach((item, index) => {
-	cards[index].style.pointerEvents = "all";
-	cards[index].setAttribute("value", item.value);
-	faces[index].src = item.front;
+	//console.log('cards', cards);
+	//let back = document.querySelectorAll(".back");
+	/*cardData.forEach((item, index) => {
+		console.log(faces[index], 'ci');
+		cards[index].style.pointerEvents = "all";
+		cards[index].setAttribute("value", item.value);
+		faces[index].src = item.front;
+		
+	});*/
+	cardData.map((item, index) => {
+		console.log(item)
+
+		cards[index].style.pointerEvents = "all";
+		cards[index].setAttribute("value", item.value);
+		faces[index].children[0].src = item.front;
 	});
 	resetText();
 };
